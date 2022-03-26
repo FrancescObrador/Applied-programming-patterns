@@ -1,0 +1,15 @@
+//
+//  #SCRIPTNAME#.cs
+//
+//  Created by #DEVELOPERS# on #DATE#
+//
+	
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "#SCRIPTNAME#", menuName = "SO/#SCRIPTNAME#")]
+public class #SCRIPTNAME# : ScriptableObject
+{
+    #NOTRIM#
+}
