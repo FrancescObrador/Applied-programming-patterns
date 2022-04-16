@@ -8,6 +8,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Observables;
+
+// TODO: Convert the script to a non monobehaviour class as an atribute of a monobehaviour view
 
 public class SourceOfIncome : MonoBehaviour
 {
@@ -16,29 +19,28 @@ public class SourceOfIncome : MonoBehaviour
     [SerializeField] Button collectButton;
     [SerializeField] Button automateButton;
     [SerializeField] Button UpgradeButton;
+
     [SerializeField] TextMeshProUGUI valueDisplay;
 
     [Header("Attributes")]
     [Min(0)]
-    [SerializeField] float value = 0f;
+    [SerializeField] NumericObservable value;
     [Min(0)]
     [SerializeField] float waitTime = 0f;
     [SerializeField] bool isAutomated = false;
 
     // Properties
     public bool IsCompleted => progress >= 1f;
-
-    public float ValuePerSecond => (value/waitTime);
-
     public bool IsAutomated => isAutomated;
+    public double ValuePerSecond => (value/waitTime);
 
     // Private Attributes
-   
     float currentTime = 0f;
     float progress = 0f;
     Coroutine processCoroutine;
 
-    private void Start()
+    #region Unity Lifecycle
+    void Start()
     {
         if (isAutomated)
         {
@@ -53,6 +55,14 @@ public class SourceOfIncome : MonoBehaviour
         }
         
         StartCoroutine(Process());
+
+        value.Subscribe(UpdateView);
+    }
+    #endregion
+
+    private void UpdateView(double value)
+    {
+        valueDisplay.text = AaNotationConversor.FormatNumber(value);
     }
 
     public void Collect()
@@ -60,7 +70,7 @@ public class SourceOfIncome : MonoBehaviour
         if (IsCompleted)
         {
             Debug.Log("Adding: " + value + " from " + this.name);
-            Wallet.Instance.UpdateValue(value);
+            Wallet.Instance.Amount += value;
 
             progress = 0f;
             currentTime = 0f;
@@ -77,7 +87,6 @@ public class SourceOfIncome : MonoBehaviour
         isAutomated = true;
         collectButton.interactable = false;
         automateButton.gameObject.SetActive(false);
-        StopAllCoroutines();
         StartCoroutine(AutomatedProcess());
     }
 
@@ -104,11 +113,6 @@ public class SourceOfIncome : MonoBehaviour
             }
             yield return null;
         }
-    }
-
-    void OnValidate()
-    {
-        valueDisplay.text = AaNotationConversor.FormatNumber(value);
     }
 }
 

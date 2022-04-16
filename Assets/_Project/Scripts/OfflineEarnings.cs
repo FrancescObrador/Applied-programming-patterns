@@ -27,11 +27,11 @@ public class OfflineEarnings : MonoBehaviour
 
         var offlineTime = difference.TotalSeconds;
 
-        var earned = GetCurrentValuePerSecond() * offlineTime;
+        var earned = Wallet.Instance.GetCurrentValuePerSecond() * offlineTime;
 
         Debug.Log("You earned = " + earned);
 
-        Wallet.Instance.Total += earned;
+        Wallet.Instance.Amount += earned;
 
 
         InvokeRepeating("ExitDate", 2f, 30f);
@@ -40,23 +40,6 @@ public class OfflineEarnings : MonoBehaviour
     private void OnDestroy()
     {
 		ExitDate();
-    }
-
-    double GetCurrentValuePerSecond()
-    {
-        var sourcesOfIncome = new List<SourceOfIncome>(FindObjectsOfType<SourceOfIncome>());
-
-        double result = 0d;
-
-        foreach (var source in sourcesOfIncome)
-        {
-            if (source.IsAutomated)
-            {
-                result += source.ValuePerSecond;
-            }
-        }
-
-        return result;
     }
 
     void ExitDate()
