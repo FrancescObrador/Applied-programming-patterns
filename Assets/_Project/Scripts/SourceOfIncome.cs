@@ -23,8 +23,7 @@ public class SourceOfIncome : MonoBehaviour
     [SerializeField] TextMeshProUGUI valueDisplay;
 
     [Header("Attributes")]
-    [Min(0)]
-    [SerializeField] NumericObservable value;
+    [SerializeField] NumericObservable amount = new NumericObservable(0);
     [Min(0)]
     [SerializeField] float waitTime = 0f;
     [SerializeField] bool isAutomated = false;
@@ -32,14 +31,13 @@ public class SourceOfIncome : MonoBehaviour
     // Properties
     public bool IsCompleted => progress >= 1f;
     public bool IsAutomated => isAutomated;
-    public double ValuePerSecond => (value/waitTime);
+    public double ValuePerSecond => (amount/waitTime);
 
     // Private Attributes
     float currentTime = 0f;
     float progress = 0f;
     Coroutine processCoroutine;
 
-    #region Unity Lifecycle
     void Start()
     {
         if (isAutomated)
@@ -56,9 +54,8 @@ public class SourceOfIncome : MonoBehaviour
         
         StartCoroutine(Process());
 
-        value.Subscribe(UpdateView);
+      // amount = new NumericObservable(0, UpdateView);
     }
-    #endregion
 
     private void UpdateView(double value)
     {
@@ -69,8 +66,8 @@ public class SourceOfIncome : MonoBehaviour
     {
         if (IsCompleted)
         {
-            Debug.Log("Adding: " + value + " from " + this.name);
-            Wallet.Instance.Amount += value;
+            Debug.Log("Adding: " + amount + " from " + this.name);
+            Wallet.Instance.Amount += amount;
 
             progress = 0f;
             currentTime = 0f;
