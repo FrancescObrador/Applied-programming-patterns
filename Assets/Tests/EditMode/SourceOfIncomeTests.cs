@@ -6,26 +6,38 @@ using ViewModels;
 public class SourceOfIncomeTests
 {
     [Test]
-    public void SourceOfIncomeTest_TimeSpan_Complete_Display()
+    public void SourceOfIncomeTest_TimeSpan_CompleteDisplay()
     {
         VM_SourceOfIncome source = new VM_SourceOfIncome();
 
-        source.time = new TimeSpan(1, 10, 11);
+        source.time = TimeSpan.FromSeconds(143523463);
 
-        Debug.Log(source.GetTimeSpanText());
+        Debug.Log(source.TimeSpanText);
 
-        Assert.AreEqual("1h 10m 11s", source.GetTimeSpanText());
+        Assert.AreEqual("4 years 6 months 21d 3h 37m 43s", source.TimeSpanText);
     }
 
     [Test]
-    public void SourceOfIncomeTest_TimeSpan_Only_Seconds()
+    public void SourceOfIncomeTest_TimeSpan_OnlySeconds()
     {
         VM_SourceOfIncome source = new VM_SourceOfIncome();
 
         source.time = new TimeSpan(0, 0, 11);
 
-        Debug.Log(source.GetTimeSpanText());
+        Debug.Log(source.TimeSpanText);
 
-        Assert.AreEqual("11s", source.GetTimeSpanText());
+        Assert.AreEqual("11s", source.TimeSpanText);
+    }
+
+    [Test]
+    public void SourceOfIncomeTest_TimeSpan_MinutesAndSeconds()
+    {
+        VM_SourceOfIncome source = new VM_SourceOfIncome();
+
+        source.time = new TimeSpan(0, 1, 11);
+
+        Debug.Log(source.TimeSpanText);
+
+        Assert.AreEqual("1m 11s", source.TimeSpanText);
     }
 }

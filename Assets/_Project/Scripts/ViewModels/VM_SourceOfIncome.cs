@@ -12,6 +12,7 @@ using System;
 
 namespace ViewModels
 {
+    [Serializable]
     public class VM_SourceOfIncome
     {
         [Header("Attributes")]
@@ -26,6 +27,7 @@ namespace ViewModels
         public bool IsCompleted => progress >= 1f;
         public bool IsAutomated => isAutomated;
         public double CashPerSecond => (cash / waitTime);
+        public string TimeSpanText => TimeSpanNotationConversor.FormatSecondsToTime(time);
 
         // Private Attributes
         float currentTime = 0f;
@@ -58,16 +60,6 @@ namespace ViewModels
             {
                 TryToCollect();
             }
-        }
-
-        public string GetTimeSpanText()
-        {
-           
-            var result = time.ToString(@"h\h\ mm\m\ ss\s");
-
-            result.TrimStart('h', 'm', 's', '0');
-
-            return result;
         }
     }
 }

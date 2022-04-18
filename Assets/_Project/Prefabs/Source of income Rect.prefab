@@ -143,7 +143,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7998240709211315917}
-  - component: {fileID: 6219506155493776980}
+  - component: {fileID: 4560340579851310991}
   m_Layer: 5
   m_Name: Source of income Rect
   m_TagString: Untagged
@@ -171,7 +171,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6219506155493776980
+--- !u!114 &4560340579851310991
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -180,18 +180,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2574738666866564475}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b49eac05cd7cc348a18d190df0ee1e2, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ce5db916e774484a885d6d9135f3cc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   progressBar: {fileID: 6577822347641219571}
   collectButton: {fileID: 6111256936349959516}
   automateButton: {fileID: 4466493086012807762}
-  UpgradeButton: {fileID: 0}
-  valueDisplay: {fileID: 3901351889461391553}
-  amount:
-    value: 0
-  waitTime: 1
-  isAutomated: 0
+  upgradeButton: {fileID: 0}
+  cashDisplay: {fileID: 3901351889461391553}
 --- !u!1 &2927099143215278823
 GameObject:
   m_ObjectHideFlags: 0

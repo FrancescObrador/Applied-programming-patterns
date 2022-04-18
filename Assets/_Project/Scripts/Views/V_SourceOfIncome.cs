@@ -13,16 +13,17 @@ using ViewModels;
 
 namespace Views
 {
-    public class SourceOfIncomeView : MonoBehaviour
+    public class V_SourceOfIncome : MonoBehaviour
     {
         [Header("External references")]
         [SerializeField] Image progressBar;
         [SerializeField] Button collectButton;
         [SerializeField] Button automateButton;
-        [SerializeField] Button UpgradeButton;
+        [SerializeField] Button upgradeButton;
 
-        [SerializeField] TextMeshProUGUI valueDisplay;
+        [SerializeField] TextMeshProUGUI cashDisplay;
 
+        [SerializeField]
         public VM_SourceOfIncome source;
 
         void Start()
@@ -50,13 +51,19 @@ namespace Views
 
         private void UpdateAmountView(double value)
         {
-            valueDisplay.text = AaNotationConversor.FormatNumber(value);
+            cashDisplay.text = AaNotationConversor.FormatNumber(value);
         }
 
         private void UpdateProgressBarView(double value)
         {
             progressBar.fillAmount = (float)value;
         }
-    }
 
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            UpdateAmountView(source.cash.Value);
+        }
+#endif
+    }
 }
