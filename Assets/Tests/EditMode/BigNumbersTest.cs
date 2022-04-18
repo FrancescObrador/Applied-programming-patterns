@@ -9,6 +9,6 @@ public class BigNumbersTest
     public void BigNumbersTestSimplePasses()
     {
         Debug.Log(AaNotationConversor.FormatNumber(MaxValue));
-        Assert.AreEqual("1", AaNotationConversor.FormatNumber(1));
+        Assert.AreEqual("1.00", AaNotationConversor.FormatNumber(1));
     }
 }
