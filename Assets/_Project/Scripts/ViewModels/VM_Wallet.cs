@@ -6,30 +6,40 @@
 	
 using System.Collections.Generic;
 using UnityEngine;
-using Observables;
+using FO.Utilities;
 
-namespace ViewModels
+namespace FO.ViewModels
 {
+    [System.Serializable]
 	public class VM_Wallet : Singleton<VM_Wallet>
 	{
-		[SerializeField] public NumericObservable amount;
+        [SerializeField] public NumericObservable cash = new NumericObservable();
 
-		public void Start()
+        
+
+		public void Init()
         {
             //TODO: Make a better save system
 			if (!PlayerPrefs.HasKey("total"))
 			{
-				PlayerPrefs.SetString("total", amount.ToString());
+				PlayerPrefs.SetString("total", cash.ToString());
 			}
 			var saved = double.Parse(PlayerPrefs.GetString("total", "0"));
 
 			Debug.Log("Loaded from playerprefs: " + saved);
 
-			amount = new NumericObservable(saved);
+			cash += saved;
+
+            cash += VM_OfflineEarnings.GetOfflineEarnings(GetCurrentTotalValuePerSecond());
 		}
 
+        public void AddCash(double amount)
+        {
+            cash += amount;
+        }
+
         // TODO: Move this to another script
-        public double GetCurrentValuePerSecond()
+        public double GetCurrentTotalValuePerSecond()
         {
             //The wallet needs a reference to the viewmodels (?)
 

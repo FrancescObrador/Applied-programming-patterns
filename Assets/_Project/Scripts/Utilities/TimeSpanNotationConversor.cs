@@ -9,46 +9,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class TimeSpanNotationConversor 
+namespace FO.Utilities
 {
-    public static string FormatSecondsToTime(TimeSpan time)
+    public static class TimeSpanNotationConversor
     {
-        var result = "";
-
-        int days = time.Days;
-
-        if (days > 365)
+        public static string FormatSecondsToTime(int _time)
         {
-            var years = days / 365;
-            result += years.ToString() + " years ";
 
-            days -= years * 365;
+            var time = new TimeSpan(0, 0, _time);
+
+            var result = "";
+
+            int days = time.Days;
+
+            if (days > 365)
+            {
+                var years = days / 365;
+                result += years.ToString() + " years ";
+
+                days -= years * 365;
+            }
+
+            if (days > 30)
+            {
+                var months = days / 30;
+                result += months.ToString() + " months ";
+                days -= months * 30;
+            }
+
+            if (days > 0)
+            {
+                result += days.ToString() + "d ";
+            }
+
+            if (time.Hours > 0)
+            {
+                result += time.Hours.ToString() + "h ";
+            }
+
+            if (time.Minutes > 0)
+            {
+                result += time.Minutes.ToString() + "m ";
+            }
+
+            result += time.Seconds.ToString() + "s";
+
+            return result;
         }
-
-        if (days > 30)
-        {
-            var months = days / 30;
-            result += months.ToString() + " months ";
-            days -= months * 30;
-        }
-
-        if (days > 0)
-        {
-            result += days.ToString() + "d ";
-        }
-
-        if (time.Hours > 0)
-        {
-            result += time.Hours.ToString() + "h ";
-        }
-
-        if (time.Minutes > 0)
-        {
-            result += time.Minutes.ToString() + "m ";
-        }
-
-        result += time.Seconds.ToString() + "s";
-
-        return result;
     }
 }

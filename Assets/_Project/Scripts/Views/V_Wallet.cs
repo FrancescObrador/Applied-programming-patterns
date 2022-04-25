@@ -7,22 +7,25 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using ViewModels;
+using FO.Utilities;
+using FO.ViewModels;
 
-namespace Views
+namespace FO.Views
 {
     public class V_Wallet : SingletonMonobehaviour<V_Wallet>
     {
         [SerializeField] TextMeshProUGUI text;
+
+        [SerializeField] VM_Wallet wallet;
 
         void Start()
         {
             // Guards
             if (!text) Debug.LogError("There is no" + text.name);
 
-            VM_Wallet.Instance.Start();
+            VM_Wallet.Instance.Init();
 
-            VM_Wallet.Instance.amount.Subscribe(UpdateAmountView);
+            VM_Wallet.Instance.cash.Subscribe(UpdateAmountView);
         }
 
         public void UpdateAmountView(double value)
@@ -32,8 +35,8 @@ namespace Views
 
         private void OnDestroy()
         {
-            PlayerPrefs.SetString("total", VM_Wallet.Instance.amount.ToString());
-            Debug.Log("Saved total: " + VM_Wallet.Instance.amount);
+            PlayerPrefs.SetString("total", VM_Wallet.Instance.cash.ToString());
+            Debug.Log("Saved total: " + VM_Wallet.Instance.cash);
         }
     }
 }

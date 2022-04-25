@@ -2,49 +2,37 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ViewModels
+
+namespace FO.ViewModels
 {
-    public class OfflineEarnings : MonoBehaviour
+    public class VM_OfflineEarnings
     {
-        DateTime currentDate;
-        DateTime oldDate;
-
         [SerializeField]
-        string exitTimeSaveKey = "exitTime";
+        static string exitTimeSaveKey = "exitTime";
 
-        void Start()
+        public static double GetOfflineEarnings(double currentCashPerSecond)
         {
             if (!PlayerPrefs.HasKey(exitTimeSaveKey))
             {
                 PlayerPrefs.SetString(exitTimeSaveKey, DateTime.Now.ToBinary().ToString());
             }
 
-            currentDate = DateTime.Now;
+            var currentDate = DateTime.Now;
             long temp = Convert.ToInt64(PlayerPrefs.GetString(exitTimeSaveKey));
             DateTime oldDate = DateTime.FromBinary(temp);
             Debug.Log("oldDate: " + oldDate);
 
             TimeSpan difference = currentDate.Subtract(oldDate);
-            Debug.Log("Difference: " + difference.TotalSeconds);
 
             var offlineTime = difference.TotalSeconds;
 
-            var earned = VM_Wallet.Instance.GetCurrentValuePerSecond() * offlineTime;
+            var earned = currentCashPerSecond * offlineTime;
+            Debug.Log("Earned = " + earned + " offline time = " + offlineTime);
 
-            Debug.Log("You earned = " + earned);
-
-            // Wallet.Instance.Amount += earned;
-
-
-            InvokeRepeating("ExitDate", 2f, 30f);
+            return earned;
         }
 
-        private void OnDestroy()
-        {
-            ExitDate();
-        }
-
-        void ExitDate()
+        public static void ExitDate()
         {
             PlayerPrefs.SetString(exitTimeSaveKey, DateTime.Now.ToBinary().ToString());
 

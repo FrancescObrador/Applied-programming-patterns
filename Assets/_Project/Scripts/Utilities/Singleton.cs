@@ -2,23 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Singleton<T> where T : new()
+namespace FO.Utilities
 {
-    private static T instance;
-
-    public static T Instance
+    /// <summary>
+    /// Singleton pattern.
+    /// This class can be called from anywhere and only exists one instance at a time.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// 
+    public class Singleton<T> where T : new()
     {
-        get
+        private static T instance;
+
+        public static T Instance
         {
-            if (instance == null)
+            private set { }
+            get
             {
-                instance = new T();
+                if (instance == null)
+                {
+                    instance = new T();
+                }
+
+                return instance;
             }
-
-            return instance;
         }
-    }
 
-    // Private constructor prevents from instancing a sigleton with new.
-    protected Singleton() { }
+        // Private constructor prevents from instancing a sigleton with new.
+        protected Singleton() { }
+    }
 }

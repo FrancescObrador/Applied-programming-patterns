@@ -8,10 +8,11 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using FO.Utilities;
 
-using ViewModels;
+using FO.ViewModels;
 
-namespace Views
+namespace FO.Views
 {
     public class V_SourceOfIncome : MonoBehaviour
     {
@@ -23,30 +24,31 @@ namespace Views
 
         [SerializeField] TextMeshProUGUI cashDisplay;
 
-        [SerializeField]
-        public VM_SourceOfIncome source;
+        public VM_SourceOfIncome vmSource;
 
         void Start()
         {
-            if (source.isAutomated)
+            if (vmSource.isAutomated)
             {
-                source.Automate();
+                vmSource.Automate();
             }
             else
             {
-                collectButton.onClick.AddListener(source.TryToCollect);
+                collectButton.onClick.AddListener(vmSource.TryToCollect);
                 collectButton.interactable = true;
 
-                automateButton.onClick.AddListener(source.Automate);
+                automateButton.onClick.AddListener(vmSource.Automate);
             }
 
-            source.cash.Subscribe(UpdateAmountView);
-            source.progress.Subscribe(UpdateProgressBarView);
+            upgradeButton.onClick.AddListener(vmSource.Upgrade);
+
+            vmSource.cash.Subscribe(UpdateAmountView);
+            vmSource.progress.Subscribe(UpdateProgressBarView);
         }
 
         private void Update()
         {
-            source.Update();
+            vmSource.Update();
         }
 
         private void UpdateAmountView(double value)
@@ -62,7 +64,7 @@ namespace Views
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            UpdateAmountView(source.cash.Value);
+            UpdateAmountView(vmSource.cash.Value);
         }
 #endif
     }

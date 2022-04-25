@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 using UnityEngine;
-using ViewModels;
+using FO.ViewModels;
 
 public class SourceOfIncomeTests
 {
@@ -10,7 +10,7 @@ public class SourceOfIncomeTests
     {
         VM_SourceOfIncome source = new VM_SourceOfIncome();
 
-        source.time = TimeSpan.FromSeconds(143523463);
+        source.waitTime = 143523463;
 
         Debug.Log(source.TimeSpanText);
 
@@ -22,7 +22,7 @@ public class SourceOfIncomeTests
     {
         VM_SourceOfIncome source = new VM_SourceOfIncome();
 
-        source.time = new TimeSpan(0, 0, 11);
+        source.waitTime = 11;
 
         Debug.Log(source.TimeSpanText);
 
@@ -34,7 +34,7 @@ public class SourceOfIncomeTests
     {
         VM_SourceOfIncome source = new VM_SourceOfIncome();
 
-        source.time = new TimeSpan(0, 1, 11);
+        source.waitTime = 661;
 
         Debug.Log(source.TimeSpanText);
 

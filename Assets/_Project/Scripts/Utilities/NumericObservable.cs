@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Observables
+namespace FO.Utilities
 {
     [Serializable]
     public class NumericObservable
@@ -30,31 +30,20 @@ namespace Observables
             }
         }
 
-        public NumericObservable()
-        {
-            this.value = 0;
-            valueHasChangedCallbacks = new List<Action<double>>();
-        }
-
-        public NumericObservable(double value, Action<double> _callback = null)
+        public NumericObservable(double value = 0)
         {
             this.value = value;
-
             valueHasChangedCallbacks = new List<Action<double>>();
-            if (_callback != null)
-            {
-                valueHasChangedCallbacks.Add(_callback);
-            }
-
-            foreach (var callback in valueHasChangedCallbacks)
-            {
-                callback?.Invoke(this.value);
-            }
         }
 
         public void Subscribe(Action<double> callback)
         {
             valueHasChangedCallbacks.Add(callback);
+        }
+
+        public void Unsubscribe(Action<double> callback)
+        {
+            valueHasChangedCallbacks.Remove(callback);
         }
 
         public static NumericObservable operator +(NumericObservable value, Action<double> action)
@@ -115,12 +104,12 @@ namespace Observables
 
         public static bool operator ==(NumericObservable value, double amount)
         {
-            return value == amount;
+            return value.Value == amount;
         }
 
         public static bool operator !=(NumericObservable value, double amount)
         {
-            return value != amount;
+            return value.Value != amount;
         }
 
         public override bool Equals(object obj)
