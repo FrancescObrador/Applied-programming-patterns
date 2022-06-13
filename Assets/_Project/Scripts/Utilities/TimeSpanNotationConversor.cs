@@ -13,42 +13,33 @@ namespace FO.Utilities
 {
     public static class TimeSpanNotationConversor
     {
+        static readonly Dictionary<int, string> bigPeriods = new Dictionary<int, string>() {
+            { 365, " years " },
+            { 30, " months " },
+        };
+
         public static string FormatSecondsToTime(int _time)
         {
-
             var time = new TimeSpan(0, 0, _time);
-
             var result = "";
-
             int days = time.Days;
 
-            if (days > 365)
-            {
-                var years = days / 365;
-                result += years.ToString() + " years ";
+            foreach (var timespan in bigPeriods) {
+                if(days > timespan.Key) {
+                    var period = days / timespan.Key;
+                    result += period.ToString() + timespan.Value;
 
-                days -= years * 365;
+                    days -= period * timespan.Key;
+                }
             }
 
-            if (days > 30)
-            {
-                var months = days / 30;
-                result += months.ToString() + " months ";
-                days -= months * 30;
-            }
-
-            if (days > 0)
-            {
+            if (days > 0) {
                 result += days.ToString() + "d ";
             }
-
-            if (time.Hours > 0)
-            {
+            if (time.Hours > 0) {
                 result += time.Hours.ToString() + "h ";
             }
-
-            if (time.Minutes > 0)
-            {
+            if (time.Minutes > 0) {
                 result += time.Minutes.ToString() + "m ";
             }
 

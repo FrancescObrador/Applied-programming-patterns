@@ -51,7 +51,7 @@ namespace FO.ViewModels
         public void Upgrade()
         {
             //TODO: Level-up the source (faster and/or cheaper)
-            cash.Value *= 2.5f;
+            cash *= 2.5f;
         }
 
         public void Update()

@@ -5,11 +5,11 @@ using FO.ViewModels;
 
 public class SourceOfIncomeTests
 {
+    VM_SourceOfIncome source = new VM_SourceOfIncome();
+
     [Test]
     public void SourceOfIncomeTest_TimeSpan_CompleteDisplay()
     {
-        VM_SourceOfIncome source = new VM_SourceOfIncome();
-
         source.waitTime = 143523463;
 
         Debug.Log(source.TimeSpanText);
@@ -20,8 +20,6 @@ public class SourceOfIncomeTests
     [Test]
     public void SourceOfIncomeTest_TimeSpan_OnlySeconds()
     {
-        VM_SourceOfIncome source = new VM_SourceOfIncome();
-
         source.waitTime = 11;
 
         Debug.Log(source.TimeSpanText);
@@ -32,12 +30,10 @@ public class SourceOfIncomeTests
     [Test]
     public void SourceOfIncomeTest_TimeSpan_MinutesAndSeconds()
     {
-        VM_SourceOfIncome source = new VM_SourceOfIncome();
-
         source.waitTime = 661;
 
         Debug.Log(source.TimeSpanText);
 
-        Assert.AreEqual("1m 11s", source.TimeSpanText);
+        Assert.AreEqual("11m 1s", source.TimeSpanText);
     }
 }
